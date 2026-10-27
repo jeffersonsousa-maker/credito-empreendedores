@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!--
+    $FLUTTER_BASE_HREF é substituído no build. Se o site for publicado em uma
+    subpasta (ex.: usuario.github.io/credito/), gere com:
+    flutter build web --base-href /credito/
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conheça as possibilidades de crédito para investir no seu negócio, fortalecer seu estoque e conquistar novas oportunidades. Atendimento pelo WhatsApp.">
+  <meta name="theme-color" content="#E11B22">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="canonical" href="https://jeffersonsousa-maker.github.io/credito-empreendedores/">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Compartilhamento em redes sociais e WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Crédito para Empreendedores">
+  <meta property="og:description" content="Seu negócio pode ir mais longe! Converse com a gente pelo WhatsApp e conheça as possibilidades de crédito.">
+  <meta property="og:url" content="https://jeffersonsousa-maker.github.io/credito-empreendedores/">
+  <meta property="og:image" content="https://jeffersonsousa-maker.github.io/credito-empreendedores/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Três agentes de atendimento sorrindo ao lado do texto: Seu negócio pode ir mais longe!">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- iOS -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Crédito">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <title>Crédito para Empreendedores</title>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #FFFFFF; }
+    #splash {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      background: #FFFFFF; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #1C1C21; transition: opacity .25s ease;
+    }
+    #splash .mark {
+      width: 56px; height: 56px; border-radius: 16px; background: #E11B22;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 30px rgba(225, 27, 34, .25);
+    }
+    #splash .spinner {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 3px solid #F9D3D4; border-top-color: #E11B22;
+      animation: spin .8s linear infinite;
+    }
+    #splash p { margin: 0; font-size: 15px; font-weight: 600; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #splash .spinner { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="splash" role="status" aria-live="polite">
+    <div class="mark" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
+        <path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/>
+      </svg>
+    </div>
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Carregando…</p>
+  </div>
+
+  <noscript>
+    <div style="padding:24px;font-family:system-ui,sans-serif;max-width:640px;margin:auto">
+      <h1>Crédito para Empreendedores</h1>
+      <p>Para usar este site, ative o JavaScript no navegador.</p>
+      <p>Ou fale direto pelo WhatsApp:
+        <a href="https://wa.me/5589981120109">+55 (89) 98112-0109</a></p>
+    </div>
+  </noscript>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

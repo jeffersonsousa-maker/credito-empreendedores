@@ -1,0 +1,60 @@
+# Compila o site em Flutter Web e publica no GitHub Pages a cada envio para
+# a branch main. Também dá para rodar manualmente em Actions > Publicar site.
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Verificar e compilar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Instalar dependências
+        run: flutter pub get
+
+      - name: Analisar o código
+        run: flutter analyze --no-fatal-infos
+
+      - name: Rodar os testes
+        run: flutter test
+
+      - name: Gerar a versão de produção
+        # O endereço do Pages fica em /<nome-do-repositório>/.
+        # Ao ligar um domínio próprio, troque por: --base-href /
+        run: >
+          flutter build web --release --no-web-resources-cdn
+          --base-href "/${{ github.event.repository.name }}/"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
