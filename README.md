@@ -133,6 +133,11 @@ GitHub indicar, marque **Enforce HTTPS** e troque `--base-href` no workflow
 para `/`. Atualize também `og:url`, `og:image` e `canonical` em
 `web/index.html`.
 
+Cada publicação também atualiza o download **Site pronto para hospedar**
+(em **Releases** no repositório): um `site-pronto.zip` já compilado, com o
+endereço base na raiz do domínio, para enviar a outra hospedagem sem
+precisar instalar o Flutter.
+
 **Outras hospedagens:**
 
 Qualquer hospedagem de arquivos estáticos serve. Opções:

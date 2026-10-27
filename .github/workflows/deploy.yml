@@ -20,6 +20,8 @@ jobs:
   build:
     name: Verificar e compilar
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # para atualizar o download "site-pronto"
     steps:
       - uses: actions/checkout@v4
 
@@ -51,6 +53,21 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
+
+      # Cópia do site pronto para qualquer hospedagem (Hostinger, cPanel,
+      # Netlify), com o endereço base na raiz do domínio. Fica em
+      # Releases > "Site pronto para hospedar" e é atualizada a cada publicação.
+      - name: Guardar cópia do site para outras hospedagens
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf site-pronto && cp -r build/web site-pronto
+          sed -i 's#<base href="[^"]*">#<base href="/">#' site-pronto/index.html
+          (cd site-pronto && zip -qr ../site-pronto.zip .)
+          if ! gh release view site-pronto >/dev/null 2>&1; then
+            gh release create site-pronto --title "Site pronto para hospedar" --notes "Cópia do site já compilado. Para usar em outra hospedagem, descompacte o arquivo site-pronto.zip e envie o conteúdo para a pasta pública do domínio (por exemplo, public_html). Este arquivo é atualizado a cada publicação."
+          fi
+          gh release upload site-pronto site-pronto.zip --clobber
 
   deploy:
     name: Publicar
