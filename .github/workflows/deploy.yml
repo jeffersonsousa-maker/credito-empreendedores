@@ -35,7 +35,11 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Rodar os testes
-        run: flutter test
+        run: flutter test --file-reporter json:test-results.json
+
+      - name: Mostrar falhas dos testes
+        if: failure()
+        run: python3 .github/scripts/test_failures.py test-results.json
 
       - name: Gerar a versão de produção
         # O endereço do Pages fica em /<nome-do-repositório>/.
