@@ -7,11 +7,13 @@ precisar abrir o log completo.
 """
 
 import json
+import re
 import sys
 
 MAX_ANNOTATIONS = 10
 MAX_ERROR = 1800
-MAX_OUTPUT = 1800
+MAX_OUTPUT = 3200
+MAX_BLOCK = 1100
 
 
 def escape_data(text: str) -> str:
@@ -20,6 +22,20 @@ def escape_data(text: str) -> str:
 
 def escape_prop(text: str) -> str:
     return escape_data(text).replace(":", "%3A").replace(",", "%2C")
+
+
+def unique_blocks(text: str) -> str:
+    """Remove exceções repetidas, mantendo uma cópia de cada."""
+    parts = re.split(r"(?=══╡ EXCEPTION)", text)
+    seen: set[str] = set()
+    kept: list[str] = []
+    for part in parts:
+        key = re.sub(r"#[0-9a-f]{5}", "", part)[:400]
+        if not part.strip() or key in seen:
+            continue
+        seen.add(key)
+        kept.append(part[:MAX_BLOCK])
+    return "\n".join(kept)
 
 
 def main(path: str) -> None:
@@ -53,7 +69,7 @@ def main(path: str) -> None:
     for test_id in failed[:MAX_ANNOTATIONS]:
         name = names.get(test_id, f"teste {test_id}")
         error = "\n".join(errors.get(test_id, []))[:MAX_ERROR]
-        output = "\n".join(prints.get(test_id, []))[:MAX_OUTPUT]
+        output = unique_blocks("\n".join(prints.get(test_id, [])))[:MAX_OUTPUT]
         message = f"{error}\n--- saída ---\n{output}" if output else error
         print(f"::error title={escape_prop(name)}::{escape_data(message)}")
 

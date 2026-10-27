@@ -99,11 +99,14 @@ class FaqItem extends StatelessWidget {
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),
     );
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
+    // Material (e não Container) para o efeito de toque do ExpansionTile
+    // aparecer sobre o fundo branco.
+    return Material(
+      color: AppColors.white,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
+        side: const BorderSide(color: AppColors.border),
       ),
       child: Theme(
         // Remove as linhas divisórias padrão do ExpansionTile.

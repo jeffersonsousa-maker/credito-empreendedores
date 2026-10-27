@@ -307,13 +307,16 @@ class _LeadFormState extends State<LeadForm> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: field.hasError
-                            ? const Color(0xFFFFF4F4)
-                            : AppColors.surfaceGray,
+                    // Material (e não Container) para o efeito de toque do
+                    // CheckboxListTile aparecer sobre o fundo colorido.
+                    Material(
+                      color: field.hasError
+                          ? const Color(0xFFFFF4F4)
+                          : AppColors.surfaceGray,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
+                        side: BorderSide(
                           color: field.hasError
                               ? AppColors.error
                               : AppColors.border,
